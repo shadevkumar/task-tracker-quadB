@@ -14,7 +14,7 @@ const AllTasks = () => {
 
   return (
     <>
-      <div className="w-10/12">
+      <div className="md:w-10/12">
         <div className="mt-4 mr-2 px-9 py-2 w-full flex justify-end ">
           <FaList
             onClick={() => {

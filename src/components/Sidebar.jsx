@@ -6,7 +6,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <div className=" w-2/12 min-h-screen flex flex-col justify-between items-center bg-[#1c1c1c] text-[#d1d1d1]  ">
+      <div className="max-md:hidden w-2/12 min-h-screen flex flex-col justify-between items-center bg-[#1c1c1c] text-[#d1d1d1]  ">
         <div className="w-full items-center justify-center my-2 py-2  flex flex-col ">
           <span className="pb-5 w-full flex items-center justify-center text-2xl my-1 font-semibold cursor-pointer text-white border-b-[1px] border-[#474747]">
             TaskTracker

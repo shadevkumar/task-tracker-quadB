@@ -34,9 +34,9 @@ const TaskCardsView = () => {
   };
 
   return (
-    <div className="px-6 flex max:md:flex-col py-6 m-4 justify-between ">
+    <div className="px-2 md:px-6 flex  py-6 m-2 md:m-4 justify-between ">
       {Object.entries(categories).map(([category, tasks]) => (
-        <div className="mx-10 md:min-w-64" key={category}>
+        <div className="md:mx-10 flex flex-col md:min-w-64" key={category}>
           <div className="flex items-center justify-center pb-4">
             {/* Category headers */}
             <h2 className="text-lg">
@@ -48,7 +48,7 @@ const TaskCardsView = () => {
               key={task.taskid}
               className="relative my-2 p-2 flex flex-col justify-center items-center"
             >
-              <div className="task my-3 relative flex flex-col  pt-8  w-60 bg-[#1c1c1c] hover:bg-[#1B1B27] rounded-md">
+              <div className="task my-3 relative flex flex-col  pt-8  md:w-60 bg-[#1c1c1c] hover:bg-[#1B1B27] rounded-md">
                 <h3
                   className={`px-4 ${
                     task.completed && "line-through text-[#676767]"
