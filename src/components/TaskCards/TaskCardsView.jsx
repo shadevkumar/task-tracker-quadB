@@ -4,8 +4,8 @@ import { FaCircleHalfStroke } from "react-icons/fa6"; //inprogress icon
 import { MdOutlineCircle } from "react-icons/md"; //todo icon
 import { IoMdCheckmarkCircle } from "react-icons/io"; //completed icon
 import { useMemo } from "react";
-import { useTaskActions } from "../utils/taskActions";
-import StatusSelect from "./StatusSelect";
+import { useTaskActions } from "../../utils/taskActions";
+import StatusSelect from "../../shared/StatusSelect";
 
 const TaskCardsView = () => {
   const tasks = useSelector((state) => state.task.tasks); // Fetch tasks from Redux store

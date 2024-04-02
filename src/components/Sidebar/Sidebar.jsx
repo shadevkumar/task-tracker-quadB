@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addTaskCard } from "../features/addTaskCard/addTaskCardSlice";
+import { displayAddTaskCard } from "../../features/displayAddTask/displayAddTaskCardSlice";
 import { FaPlus } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -19,7 +19,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => {
-                dispatch(addTaskCard(true)); // Dispatch action to show add task card
+                dispatch(displayAddTaskCard(true)); // Dispatch action to show add task card
               }}
               className="text-base lg:text-l px-2 py-2 my-2 text-center font-semibold border-[1px] border-[#1B1B1B] bg-[#292929] text-[#d5d5d5]  rounded-md hover:bg-[#2e2e2e] cursor-pointer sticky top-0 flex items-center gap-2"
             >
@@ -33,7 +33,7 @@ const Sidebar = () => {
           <ul className="mt-3 ">
             <div to="/">
               <li className="my-3 hover:text-slate-50 cursor-pointer">
-                All Tasks
+                <a href="/">All Tasks</a>
               </li>
             </div>
           </ul>

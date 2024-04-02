@@ -3,17 +3,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useRef, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addTaskCard } from "../features/addTaskCard/addTaskCardSlice";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addTask } from "../features/taskCard/taskSlice";
+import { addTask } from "../../features/taskCard/taskSlice";
 import { BiSolidError } from "react-icons/bi";
+import { displayAddTaskCard } from "../../features/displayAddTask/displayAddTaskCardSlice";
 
 // Component for adding a new task
 const AddTask = () => {
   const dispatch = useDispatch(); // To dispatch actions
-  const containerRef = useRef(); // Ref for the component container to handle clicks outside
-  const displayAddTaskCard = useSelector((state) => state.addTaskCard.flag); // Flag to control display of the add task card
+  const containerRef = useRef(); // Ref for the component container to handle clicks outside  
 
   // State for task details
   const [taskTitle, setTaskTitle] = useState("");
@@ -45,7 +44,7 @@ const AddTask = () => {
     }
 
     dispatch(addTask(taskItems));
-    dispatch(addTaskCard(false)); // To hide/display Add Task Component UI
+    dispatch(displayAddTaskCard(false)); // To hide/display Add Task Component UI
 
     // Reset task details to empty
     setTaskTitle("");
@@ -67,7 +66,7 @@ const AddTask = () => {
   const handleClickOutside = (event) => {
     if (selectOpen) return;
     if (containerRef.current && !containerRef.current.contains(event.target)) {
-      dispatch(addTaskCard(false));
+      dispatch(displayAddTaskCard(false));
     }
   };
 
