@@ -24,12 +24,12 @@ const TaskListView = () => {
   };
 
   return (
-    <div className="px-6 py-6 m-4 justify-between ">
+    <div className="px-6 py-6 md:m-4 justify-between ">
       <ul className="">
         {tasks.map((task) => (
           <li
             key={task.taskid}
-            className=" flex items-center justify-between  my-3 relative px-4 pt-8 py-4  bg-[#1c1c1c] hover:bg-[#1B1B27] rounded-md"
+            className=" flex max-md:flex-col md:items-center justify-between  my-3 relative px-4 pt-8 py-4  bg-[#1c1c1c] hover:bg-[#1B1B27] rounded-md"
           >
             <div>
               <h3
@@ -38,7 +38,7 @@ const TaskListView = () => {
                 {task.title}
               </h3>
               <p
-                className={`text-sm  ${
+                className={`text-xs md:text-sm  ${
                   task.completed
                     ? "line-through text-[#676767]"
                     : "text-[#959595]"
@@ -48,7 +48,7 @@ const TaskListView = () => {
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2  max-md:flex justify-end">
               {/* Status selection FormControl */}
               <FormControl
                 variant="filled"
