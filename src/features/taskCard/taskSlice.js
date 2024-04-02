@@ -1,14 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const dummyTasks = [
+  {
+    taskid: '1',
+    title: 'Go to Gym',
+    description: 'Go to Gym at 5:30 pm - Leg Day',
+    status: 'todo',
+  },
+  {
+    taskid: '2',
+    title: 'Submit ReactJS Assignment',
+    description: 'Submitted ReactJS Intern Assignment',
+    status: 'completed',
+  },
+  {
+    taskid: '3',
+    title: 'Add To-do',
+    description: 'Description for Your To-do',
+    status: 'inProgress',
+  },
+]
+
 function getInitialTasks() {
   try {
     const localStorageData = localStorage.getItem('taskItems')
     return localStorageData && localStorageData !== 'undefined'
       ? JSON.parse(localStorageData)
-      : []
+      : dummyTasks
   } catch (error) {
     console.error('Failed to load tasks from local storage:', error)
-    return []
+    return dummyTasks
   }
 }
 
