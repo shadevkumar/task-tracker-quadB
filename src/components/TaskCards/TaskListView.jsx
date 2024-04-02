@@ -5,8 +5,8 @@ import { MdOutlineCircle } from "react-icons/md";
 //todo icon
 import { IoMdCheckmarkCircle } from "react-icons/io"; //completed icon
 import { useMemo } from "react";
-import { useTaskActions } from "../utils/taskActions";
-import StatusSelect from "./StatusSelect";
+import { useTaskActions } from "../../utils/taskActions";
+import StatusSelect from "../../shared/StatusSelect";
 
 const TaskListView = () => {
   const tasks = useSelector((state) => state.task.tasks);
