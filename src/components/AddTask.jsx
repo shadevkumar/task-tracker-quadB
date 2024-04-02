@@ -141,7 +141,7 @@ const AddTask = () => {
         </FormControl>
         <button
           onClick={handleCreateTask} // Trigger task creation
-          className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-2 px-4 rounded"
+          className="text-base lg:text-l px-4 py-2 mr-6 my-2 text-center font-semibold border-[1px] border-[#1B1B1B] bg-[#292929] text-[#d5d5d5]  rounded-md hover:bg-[#2e2e2e] cursor-pointer sticky top-0 flex items-center gap-2"
         >
           Add Task
         </button>

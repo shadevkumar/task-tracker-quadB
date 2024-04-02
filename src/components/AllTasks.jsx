@@ -26,6 +26,11 @@ const AllTasks = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Function to determine the icon background color
+  const iconBgColor = (iconView) => {
+    return view === iconView ? "text-blue-600" : "";
+  };
+
   return (
     <>
       <div className="md:w-10/12 scrollbar-hide ">
@@ -34,13 +39,13 @@ const AllTasks = () => {
             onClick={() => {
               setView("list");
             }}
-            className="mx-2 cursor-pointer"
+            className={`mx-2 cursor-pointer ${iconBgColor("list")}`}
           />
           <BsCardHeading
             onClick={() => {
               setView("cards");
             }}
-            className="mx-2 cursor-pointer"
+            className={`mx-2 cursor-pointer ${iconBgColor("cards")}`}
           />
         </div>
         {windowWidth < 768 ? (
