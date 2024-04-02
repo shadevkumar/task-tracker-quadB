@@ -4,20 +4,19 @@ import { FaCircleHalfStroke } from "react-icons/fa6"; //inprogress icon
 import { MdOutlineCircle } from "react-icons/md"; //todo icon
 import { IoMdCheckmarkCircle } from "react-icons/io"; //completed icon
 import { useMemo } from "react";
-import { getTaskStatus } from "../utils/taskUtils";
 import { useTaskActions } from "../utils/taskActions";
 import StatusSelect from "./StatusSelect";
 
 const TaskCardsView = () => {
-  const tasks = useSelector((state) => state.task.tasks);
-  const { handleRemoveItem } = useTaskActions();
+  const tasks = useSelector((state) => state.task.tasks); // Fetch tasks from Redux store
+  const { handleRemoveItem } = useTaskActions(); // Custom hook for task actions
 
   // Memoize the categories to prevent unnecessary recalculations
   const categories = useMemo(
     () => ({
-      todo: tasks.filter((task) => getTaskStatus(task) === "todo"),
-      inProgress: tasks.filter((task) => getTaskStatus(task) === "inProgress"),
-      completed: tasks.filter((task) => getTaskStatus(task) === "completed"),
+      todo: tasks.filter((task) => task.status === "todo"),
+      inProgress: tasks.filter((task) => task.status === "inProgress"),
+      completed: tasks.filter((task) => task.status === "completed"),
     }),
     [tasks]
   );
@@ -31,6 +30,7 @@ const TaskCardsView = () => {
     completed: <IoMdCheckmarkCircle className="text-blue-600" />,
   };
 
+  // Function to truncate task description to a word limit
   const truncateDescription = (description, wordLimit) => {
     const words = description?.split(" ");
     if (words?.length > wordLimit) {
@@ -61,14 +61,14 @@ const TaskCardsView = () => {
               <div className="task my-3 relative flex flex-col pt-4 xl:pt-8 md:w-44  lg:w-60 xl:w-64 2xl:w-72 bg-[#1c1c1c]  rounded-md ">
                 <h3
                   className={`md:px-2 lg:px-4 text-sm lg:text-base ${
-                    task.completed && "line-through text-[#676767]"
+                    task.status === "completed" && "line-through text-[#676767]"
                   }`}
                 >
                   {task.title}
                 </h3>
                 <p
                   className={`md:px-2 lg:px-4 text-xs lg:text-sm ${
-                    task.completed
+                    task.status === "completed"
                       ? "line-through text-[#676767]"
                       : "text-[#959595]"
                   }`}

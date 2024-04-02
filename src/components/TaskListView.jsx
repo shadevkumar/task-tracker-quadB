@@ -13,16 +13,23 @@ const TaskListView = () => {
 
   const { handleRemoveItem } = useTaskActions();
 
+  // Reverse tasks for display purposes
   const reversedTasks = useMemo(() => {
     return tasks.slice().reverse();
   }, [tasks]); // Dependency array
 
-  const getStatusIcon = (task) => {
-    if (task.todo) return <MdOutlineCircle />;
-    if (task.inProgress)
-      return <FaCircleHalfStroke className="text-orange-600" />;
-    if (task.completed)
-      return <IoMdCheckmarkCircle className="text-blue-600" />;
+  // Function to determine and return the appropriate status icon for each task
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "todo":
+        return <MdOutlineCircle />;
+      case "inProgress":
+        return <FaCircleHalfStroke className="text-orange-600" />;
+      case "completed":
+        return <IoMdCheckmarkCircle className="text-blue-600" />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -35,10 +42,13 @@ const TaskListView = () => {
           >
             <div>
               <div className="flex items-center gap-2">
-                {getStatusIcon(task)}
+                {getStatusIcon(task.status)}
+                {/* Display status icon */}
                 <h3
                   className={`text-lg ${
-                    task.completed && "line-through text-[#676767]"
+                    task.status === "completed"
+                      ? "line-through text-[#676767]"
+                      : ""
                   }`}
                 >
                   {task.title}
@@ -47,10 +57,10 @@ const TaskListView = () => {
 
               <p
                 className={`pl-6 text-xs  md:text-sm  ${
-                  task.completed
+                  task.status === "completed"
                     ? "line-through text-[#676767]"
-                    : "text-[#959595]"
-                } `}
+                    : ""
+                }`}
               >
                 {task.description}
               </p>
@@ -64,7 +74,7 @@ const TaskListView = () => {
                   className="text-xl font-semibold text-gray-300 hover:scale-150"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleRemoveItem(task?.taskid);
+                    handleRemoveItem(task?.taskid); // Delete task action
                   }}
                 />
               </div>

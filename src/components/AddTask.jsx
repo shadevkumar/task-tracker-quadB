@@ -6,7 +6,7 @@ import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTaskCard } from "../features/addTaskCard/addTaskCardSlice";
 import { v4 as uuidv4 } from "uuid";
-import { addTask, statusCheck } from "../features/taskCard/taskSlice";
+import { addTask } from "../features/taskCard/taskSlice";
 import { BiSolidError } from "react-icons/bi";
 
 // Component for adding a new task
@@ -18,18 +18,16 @@ const AddTask = () => {
   // State for task details
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [status, setStatus] = useState(""); // Task status (todo, inProgress, completed)
+  const [status, setStatus] = useState("todo"); // Task status (todo, inProgress, completed)
   const [selectOpen, setSelectOpen] = useState(false); // State to handle select dropdown to not tackel with handleOutside
-  const [error, setError] = useState(""); // State for error messages
+  const [error, setError] = useState("");
 
   // Object to hold the new task details
   const taskItems = {
     taskid: uuidv4(), // Unique ID for each task
     title: taskTitle,
     description: taskDescription,
-    todo: true,
-    inProgress: false,
-    completed: false,
+    status: status, // Use the status state directly
   };
 
   // Handles changes to the task title input
@@ -48,7 +46,6 @@ const AddTask = () => {
 
     dispatch(addTask(taskItems));
     dispatch(addTaskCard(false)); // To hide/display Add Task Component UI
-    dispatch(statusCheck(status));
 
     // Reset task details to empty
     setTaskTitle("");
