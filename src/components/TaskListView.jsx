@@ -1,44 +1,52 @@
-import { useSelector, useDispatch } from "react-redux";
-import { updateTaskStatus } from "../features/taskCard/taskSlice";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
+import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
-import { removeItem } from "../features/taskCard/taskSlice";
+import { FaCircleHalfStroke } from "react-icons/fa6"; //inprogress icon
+import { MdOutlineCircle } from "react-icons/md";
+//todo icon
+import { IoMdCheckmarkCircle } from "react-icons/io"; //completed icon
+import { useMemo } from "react";
+import { useTaskActions } from "../utils/taskActions";
+import StatusSelect from "./StatusSelect";
 
 const TaskListView = () => {
-  const tasks = useSelector((state) => state.task.tasks)
-    .slice()
-    .reverse();
+  const tasks = useSelector((state) => state.task.tasks);
 
-  const dispatch = useDispatch();
+  const { handleRemoveItem } = useTaskActions();
 
-  const handleRemoveItem = (taskid) => {
-    dispatch(removeItem(taskid));
-  };
+  const reversedTasks = useMemo(() => {
+    return tasks.slice().reverse();
+  }, [tasks]); // Dependency array
 
-  // Function to handle status change
-  const handleStatusChange = (taskId, newStatus) => {
-    dispatch(updateTaskStatus({ taskId, newStatus }));
+  const getStatusIcon = (task) => {
+    if (task.todo) return <MdOutlineCircle />;
+    if (task.inProgress)
+      return <FaCircleHalfStroke className="text-orange-600" />;
+    if (task.completed)
+      return <IoMdCheckmarkCircle className="text-blue-600" />;
   };
 
   return (
     <div className="px-6 py-6 md:m-4 justify-between ">
       <ul className="">
-        {tasks.map((task) => (
+        {reversedTasks.map((task) => (
           <li
             key={task.taskid}
-            className=" flex max-md:flex-col md:items-center justify-between  my-3 relative px-4 pt-8 py-4  bg-[#1c1c1c] hover:bg-[#1B1B27] rounded-md"
+            className=" flex max-md:flex-col md:items-center justify-between  my-3 relative px-4 pt-8 py-4  bg-[#1c1c1c] rounded-md"
           >
             <div>
-              <h3
-                className={`${task.completed && "line-through text-[#676767]"}`}
-              >
-                {task.title}
-              </h3>
+              <div className="flex items-center gap-2">
+                {getStatusIcon(task)}
+                <h3
+                  className={`text-lg ${
+                    task.completed && "line-through text-[#676767]"
+                  }`}
+                >
+                  {task.title}
+                </h3>
+              </div>
+
               <p
-                className={`text-xs md:text-sm  ${
+                className={`pl-6 text-xs  md:text-sm  ${
                   task.completed
                     ? "line-through text-[#676767]"
                     : "text-[#959595]"
@@ -50,39 +58,7 @@ const TaskListView = () => {
 
             <div className="flex items-center gap-2  max-md:flex justify-end">
               {/* Status selection FormControl */}
-              <FormControl
-                variant="filled"
-                sx={{
-                  m: 1,
-                  minWidth: 125,
-                  backgroundColor: "#161616",
-                  borderRadius: "6px",
-                }}
-              >
-                <InputLabel sx={{ color: "#d1d1d1" }}>Change Status</InputLabel>
-                <Select
-                  label="Status"
-                  value={
-                    task.todo
-                      ? "todo"
-                      : task.inProgress
-                      ? "inProgress"
-                      : "completed"
-                  }
-                  sx={{ color: "#d1d1d1", height: "2.5rem" }}
-                  onChange={(e) =>
-                    handleStatusChange(task.taskid, e.target.value)
-                  }
-                >
-                  {!task.todo && <MenuItem value="todo">Todo</MenuItem>}
-                  {!task.inProgress && (
-                    <MenuItem value="inProgress">In Progress</MenuItem>
-                  )}
-                  {!task.completed && (
-                    <MenuItem value="completed">Completed</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
+              <StatusSelect task={task} />
               <div>
                 <MdDelete
                   className="text-xl font-semibold text-gray-300 hover:scale-150"

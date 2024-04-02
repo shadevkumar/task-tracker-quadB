@@ -5,18 +5,18 @@ import { useSelector } from "react-redux";
 import AddTask from "./components/AddTask";
 
 function App() {
-  const showAddItemCard = useSelector((state) => state.addItemCard.flag);
+  const displayAddTaskCard = useSelector((state) => state.addTaskCard.flag);
   return (
     <>
       <div
         className={` flex max-md:flex-col bg-[#161616] min-h-screen text-white ${
-          showAddItemCard && "blur-md"
+          displayAddTaskCard && "blur-md"
         } `}
       >
         <Sidebar />
         <AllTasks />
       </div>
-      {showAddItemCard && <AddTask />}
+      {displayAddTaskCard && <AddTask />}
     </>
   );
 }
