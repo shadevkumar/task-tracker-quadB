@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 function getInitialTasks() {
-  const localStorageData = localStorage.getItem('taskItems')
-  return localStorageData && localStorageData !== 'undefined'
-    ? JSON.parse(localStorageData)
-    : []
+  try {
+    const localStorageData = localStorage.getItem('taskItems')
+    return localStorageData && localStorageData !== 'undefined'
+      ? JSON.parse(localStorageData)
+      : []
+  } catch (error) {
+    console.error('Failed to load tasks from local storage:', error)
+    return []
+  }
 }
 
 function updateLocalStorage(tasks) {
-  localStorage.setItem('taskItems', JSON.stringify(tasks))
+  try {
+    localStorage.setItem('taskItems', JSON.stringify(tasks))
+  } catch (error) {
+    console.error('Failed to save tasks to local storage:', error)
+  }
 }
 
 export const taskSlice = createSlice({
@@ -52,18 +61,23 @@ export const taskSlice = createSlice({
       updateLocalStorage(state.tasks)
     },
     updateTaskStatus: (state, action) => {
-      const { taskId, newStatus } = action.payload;
-      const taskIndex = state.tasks.findIndex(task => task.taskid === taskId);
+      const { taskId, newStatus } = action.payload
+      const taskIndex = state.tasks.findIndex((task) => task.taskid === taskId)
       if (taskIndex !== -1) {
-        state.tasks[taskIndex].todo = newStatus === 'todo';
-        state.tasks[taskIndex].inProgress = newStatus === 'inProgress';
-        state.tasks[taskIndex].completed = newStatus === 'completed';
-        updateLocalStorage(state.tasks);
+        state.tasks[taskIndex].todo = newStatus === 'todo'
+        state.tasks[taskIndex].inProgress = newStatus === 'inProgress'
+        state.tasks[taskIndex].completed = newStatus === 'completed'
+        updateLocalStorage(state.tasks)
       }
     },
   },
 })
 
-export const { addTask, statusCheck, removeItem,updateTaskStatus } = taskSlice.actions
+export const {
+  addTask,
+  statusCheck,
+  removeItem,
+  updateTaskStatus,
+} = taskSlice.actions
 
 export default taskSlice.reducer
